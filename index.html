@@ -1,58 +1,72 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Teste — Vídeo Google Drive</title>
-  <style>
-    :root {
-      --bg: #0f0f10; --fg: #eaeaea; --muted:#9aa0a6; --card:#1a1b1e; --accent:#3ea6ff;
-    }
-    * { box-sizing: border-box; }
-    body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    header { padding: 20px; text-align:center; }
-    h1 { margin: 0 0 4px; font-size: 20px; }
-    p.hint { margin: 0; color: var(--muted); font-size: 14px; }
-    .wrap { max-width: 900px; margin: 20px auto 40px; padding: 0 16px; }
-    .card { background: var(--card); border: 1px solid #22252a; border-radius: 14px; padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
-    .ratio { position: relative; width: 100%; padding-top: 56.25%; border-radius: 10px; overflow: hidden; }
-    .ratio iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
-    footer { text-align:center; color:var(--muted); font-size: 13px; padding: 16px; }
-    code { background:#0b0c0e; padding:2px 6px; border-radius:6px; }
-  </style>
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Expired</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        .story-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .story-video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blurred {
+            filter: blur(15px);
+        }
+
+        .expired-message {
+            position: absolute;
+            color: white;
+            font-size: 2em;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .show-message {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Teste de Vídeo — Google Drive</h1>
-    <p class="hint">Se precisar mudar o vídeo, substitua o <code>FILE_ID</code> no comentário do código.</p>
-  </header>
-
-  <div class="wrap">
-    <div class="card">
-      <!--
-        ⚙️ COMO TROCAR O VÍDEO
-        Pegue o ID do ficheiro do Drive (entre "/d/" e "/view") e substitua no src abaixo.
-        Exemplo de link partilhado:
-        https://drive.google.com/file/d/1dkR6_IEB-8CZ0oPuThYv2uwk0XAu4ZDL/view?usp=sharing
-        ID = 1dkR6_IEB-8CZ0oPuThYv2uwk0XAu4ZDL
-
-        Player incorporado do Drive (recomendado):
-        https://drive.google.com/file/d/FILE_ID/preview
-
-        Observação: usar <video> com link direto do Drive pode falhar por causa de permissões/CORS e tamanho do ficheiro.
-      -->
-      <div class="ratio">
-        <iframe
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-          src="https://drive.google.com/file/d/1dkR6_IEB-8CZ0oPuThYv2uwk0XAu4ZDL/preview">
-        </iframe>
-      </div>
+    <div class="story-container">
+        <video src="media/zap.mp4" class="story-video" id="storyVideo" autoplay="" muted="" playsinline=""></video>
+        <div class="expired-message" id="expiredMessage">
+            Esse vídeo privado expirou!
+        </div>
     </div>
-  </div>
 
-  <footer>
-    Página de teste simples — funciona enquanto o ficheiro do Drive estiver partilhado com “Qualquer pessoa com o link”.
-  </footer>
-</body>
-</html>
+    <script>
+        const storyVideo = document.getElementById('storyVideo');
+        const expiredMessage = document.getElementById('expiredMessage');
+
+        // When the video ends, apply blur and show message
+        storyVideo.addEventListener('ended', () => {
+            storyVideo.classList.add('blurred');
+            expiredMessage.classList.add('show-message');
+        });
+    </script>
+
+
+</body></html>
